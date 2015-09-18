@@ -1,5 +1,6 @@
 package com.example.android.sunshine.app;
 
+import android.content.Intent;
 import android.support.v4.app.Fragment;
 import android.support.v7.app.ActionBarActivity;
 import android.os.Bundle;
@@ -8,6 +9,7 @@ import android.view.Menu;
 import android.view.MenuItem;
 import android.view.View;
 import android.view.ViewGroup;
+import android.widget.TextView;
 
 public class DetailedActivity extends ActionBarActivity {
 
@@ -17,7 +19,7 @@ public class DetailedActivity extends ActionBarActivity {
         setContentView(R.layout.activity_detailed);
         if (savedInstanceState == null) {
             getSupportFragmentManager().beginTransaction()
-                    .add(R.id.container, new PlaceholderFragment())
+                    .add(R.id.container, new DetailedFragment())
                     .commit();
         }
     }
@@ -45,15 +47,25 @@ public class DetailedActivity extends ActionBarActivity {
         return super.onOptionsItemSelected(item);
     }
 
-    public static class PlaceholderFragment extends Fragment {
+    public static class DetailedFragment extends Fragment {
 
-        public PlaceholderFragment() {
+        public DetailedFragment() {
         }
 
         @Override
         public View onCreateView(LayoutInflater inflater, ViewGroup container,
                                  Bundle savedInstanceState) {
             View rootView = inflater.inflate(R.layout.fragment_detailed, container, false);
+
+            //.setText("string") cast on TextView sets the text on it
+            // intent.EXTRA_TEXT stores and transfers the text between windows
+            Intent inputtext = getActivity().getIntent();
+            if (inputtext != null && inputtext.hasExtra(Intent.EXTRA_TEXT)) {
+                String forecastStr = inputtext.getStringExtra(Intent.EXTRA_TEXT);
+                ((TextView) rootView.findViewById(R.id.detail_text))
+                        .setText(forecastStr);
+            }
+
             return rootView;
         }
     }
