@@ -14,6 +14,12 @@ public class SettingsActivity extends PreferenceActivity
 
     public void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
+        //connect xml file to this screen
+        addPreferencesFromResource(R.xml.pref_general);
+        //bind pref_location_key to the summary so that the value pref_location_key updates when the user interacts with this setting
+        bindPreferenceSummaryToValue(findPreference(getString(R.string.pref_location_key)));
+        bindPreferenceSummaryToValue(findPreference(getString(R.string.pref_units_key)));
+
     }
     /**
      * Attaches a listener so the summary is always updated with the preference value.

@@ -3,10 +3,25 @@
 
     <string name="app_name">Sunshine</string>
     <string name="hello_world">Hello world!</string>
+    <!-- button titles -->
     <string name="action_settings">Settings</string>
-    <string name="action_refresh" translatable="false">Download Data</string>
+    <string name="action_refresh" translatable="false">Refresh Data</string>
+    <string name="show_pref_location">Show Location</string>
+
     <string name="title_activity_detailed">More Details</string>
     <string name="title_activity_settings">Settings</string>
 
+    show_pref_location
+    <!-- location settings strings -->
+    <string name="pref_location_label">Location</string>
+    <string name="pref_location_key" translatable="false">location</string>
+    <string name="pref_location_default" translatable="false">enter city or location id</string>
+    <!-- temperature settings strings -->
+    <string name="pref_units_label">Temperature Units</string>
+    <string name="pref_units_label_metric">Metric C</string>
+    <string name="pref_units_label_imperial">Imperial F</string>
+    <string name="pref_units_key" translatable="false">units</string>
+    <string name="pref_units_metric" translatable="false">metric</string>
+    <string name="pref_units_imperial" translatable="false">imperial</string>
 
 </resources>
