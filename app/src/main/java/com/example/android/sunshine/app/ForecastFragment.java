@@ -45,6 +45,8 @@ public class ForecastFragment extends Fragment {
 
     private ArrayAdapter<String> mForecastAdapter;
 
+    private String Uriarg;
+
     public ForecastFragment() {
     }
 
@@ -75,15 +77,13 @@ public class ForecastFragment extends Fragment {
             return true;
         }
         else if (id== R.id.show_pref_location) {
-            SharedPreferences prefs = PreferenceManager.getDefaultSharedPreferences(getActivity());
-            String location = prefs.getString(getString(R.string.pref_location_key),
-                    getString(R.string.pref_location_default));
+            String zoom = String.valueOf(15);
+            Uri gmmIntentUri = Uri.parse(Uriarg+"z="+zoom);
 
-
-
-            //Intent showloc = new Intent(Intent.ACTION_VIEW, );
-            //showloc.setPackage("com.google.android.apps.maps");
-            //startActivity(showloc);
+            Intent showloc = new Intent(Intent.ACTION_VIEW, gmmIntentUri);
+            showloc.setPackage("com.google.android.apps.maps");
+            startActivity(showloc);
+            return true;
 
         }
         return super.onOptionsItemSelected(item);
@@ -181,6 +181,7 @@ public class ForecastFragment extends Fragment {
             JSONObject coords = forecastJson.getJSONObject(OWM_CITY).getJSONObject(OWM_COORDS);
             lat = coords.getString(OWM_LAT).toString();
             lon = coords.getString(OWM_LON).toString();
+
             // OWM returns daily forecasts based upon the local time of the city that is being
             // asked for, which means that we need to know the GMT offset to translate this data
             // properly.
@@ -198,8 +199,8 @@ public class ForecastFragment extends Fragment {
             // now we work exclusively in UTC
             dayTime = new Time();
 
-            String[] resultStrs = new String[numDays];
-
+            String[] resultStrs = new String[numDays+1];
+            resultStrs[0] = "geo:" + lat + "," + lon + "?";
             SharedPreferences sharedPrefs =
                     PreferenceManager.getDefaultSharedPreferences(getActivity());
             String unitType = sharedPrefs.getString(
@@ -234,7 +235,7 @@ public class ForecastFragment extends Fragment {
                 double low = temperatureObject.getDouble(OWM_MIN);
 
                 highAndLow = formatHighLows(high, low, unitType);
-                resultStrs[i] = day + " - " + description + " - " + highAndLow;
+                resultStrs[i+1] = day + " - " + description + " - " + highAndLow;
             }
             return resultStrs;
         }
@@ -331,8 +332,9 @@ public class ForecastFragment extends Fragment {
         protected void onPostExecute(String[] result) {
             if (result != null) {
                 mForecastAdapter.clear();
-                for (String dayForecastStr : result) {
-                    mForecastAdapter.add(dayForecastStr);
+                Uriarg = result[0];
+                for (int i = 0; i < 7; i++) {
+                    mForecastAdapter.add(result[i+1]);
                 }
             } else {mForecastAdapter.add("fetching error, check location");}
         }
