@@ -99,6 +99,7 @@ public class DetailedActivity extends ActionBarActivity {
             } else {
                 Log.d(LOG_TAG, "Share Action Provider is null");
             }
+
         }
 
         private Intent createShareForecastIntent() {
