@@ -173,6 +173,7 @@ public class ForecastFragment extends Fragment {
             final String OWM_COORDS = "coord";
             final String OWM_LAT = "lat";
             final String OWM_LON = "lon";
+
             String lat;
             String lon;
 
@@ -265,12 +266,14 @@ public class ForecastFragment extends Fragment {
                 final String FORMAT_PARAM = "mode";
                 final String UNITS_PARAM = "units";
                 final String DAYS_PARAM = "cnt";
+                final String APPID_PARAM = "APPID";
 
                 Uri builtUri = Uri.parse(FORECAST_BASE_URL).buildUpon()
                         .appendQueryParameter(QUERY_PARAM, params[0])
                         .appendQueryParameter(FORMAT_PARAM, format)
                         .appendQueryParameter(UNITS_PARAM, units)
                         .appendQueryParameter(DAYS_PARAM, Integer.toString(numDays))
+                        .appendQueryParameter(APPID_PARAM,"73d63223a5361a0955eaf64fca23378c")
                         .build();
 
                 URL url = new URL(builtUri.toString());
